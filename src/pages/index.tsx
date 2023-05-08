@@ -7,7 +7,7 @@ const Home: NextPage = () => {
     <>
       <Head>
         <title>Website Name</title>
-        <meta name="description" content="Made by DPS" />
+        <meta name="description" content="Made with create-t3-app" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
