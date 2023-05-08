@@ -1,6 +1,6 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
+import Layout from "~/components/layout";
 
 const Home: NextPage = () => {
   return (
@@ -10,8 +10,11 @@ const Home: NextPage = () => {
         <meta name="description" content="Made by DPS" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-      </main>
+      <Layout>
+        <div className="">
+          Landing Page
+        </div>
+      </Layout>
     </>
   );
 };
