@@ -21,8 +21,8 @@ const fetchNavbarDocument = async () => {
 const Navbar = async () => {
   const { navigationItems, logoUrl } = await fetchNavbarDocument()
   return (
-    <header className="w-full">
-      <div className="w-full max-w-[1440px] mx-auto px-4 flex items-center py-4 gap-10 shadow-md">
+    <header className="w-full shadow-md">
+      <div className="w-full max-w-[1440px] mx-auto px-4 flex items-center py-4 gap-10">
         <div className="">
           <img src={logoUrl} alt="logo" className="h-8 w-auto" />
         </div>
