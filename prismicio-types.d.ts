@@ -24,7 +24,7 @@ interface HomePageDocumentData {
  * Slice for * Home page → Slice Zone*
  *
  */
-type HomePageDocumentDataSlicesSlice = HeroSectionSlice;
+type HomePageDocumentDataSlicesSlice = HeroSectionSlice | NavbarSlice;
 /**
  *  Home page document from Prismic
  *
@@ -107,6 +107,75 @@ export type HeroSectionSlice = prismicT.SharedSlice<
   'hero_section',
   HeroSectionSliceVariation
 >;
+/**
+ * Primary content in Navbar → Primary
+ *
+ */
+interface NavbarSliceDefaultPrimary {
+  /**
+   * Logo field in *Navbar → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: navbar.primary.logo
+   * - **Documentation**: https://prismic.io/docs/core-concepts/image
+   *
+   */
+  logo: prismicT.ImageField<never>;
+}
+/**
+ * Item in Navbar → Items
+ *
+ */
+export interface NavbarSliceDefaultItem {
+  /**
+   * Navigation label field in *Navbar → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: navbar.items[].navigation_label
+   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+   *
+   */
+  navigation_label: prismicT.KeyTextField;
+  /**
+   * Navigation link field in *Navbar → Items*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: navbar.items[].navigation_link
+   * - **Documentation**: https://prismic.io/docs/core-concepts/link-content-relationship
+   *
+   */
+  navigation_link: prismicT.LinkField;
+}
+/**
+ * Default variation for Navbar Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: `Default`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type NavbarSliceDefault = prismicT.SharedSliceVariation<
+  'default',
+  Simplify<NavbarSliceDefaultPrimary>,
+  Simplify<NavbarSliceDefaultItem>
+>;
+/**
+ * Slice variation for *Navbar*
+ *
+ */
+type NavbarSliceVariation = NavbarSliceDefault;
+/**
+ * Navbar Shared Slice
+ *
+ * - **API ID**: `navbar`
+ * - **Description**: `Navbar`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type NavbarSlice = prismicT.SharedSlice<'navbar', NavbarSliceVariation>;
 declare module '@prismicio/client' {
   interface CreateClient {
     (
@@ -124,6 +193,11 @@ declare module '@prismicio/client' {
       HeroSectionSliceDefault,
       HeroSectionSliceVariation,
       HeroSectionSlice,
+      NavbarSliceDefaultPrimary,
+      NavbarSliceDefaultItem,
+      NavbarSliceDefault,
+      NavbarSliceVariation,
+      NavbarSlice,
     };
   }
 }

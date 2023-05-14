@@ -1,10 +1,10 @@
-import { InferGetStaticPropsType, type NextPage } from "next";
-import Head from "next/head";
-import Layout from "~/components/layout";
-import { createClient } from "prismicio";
+import { createClient } from 'prismicio'
+import React from 'react'
+import Layout from '~/components/layout'
 import { AllDocumentTypes, NavbarSlice } from "prismicio-types";
 import { Query } from "@prismicio/types";
 import * as prismicH from '@prismicio/helpers'
+import { InferGetStaticPropsType, NextPage } from 'next';
 
 const getHomePageData = (res: Query<AllDocumentTypes>) => {
   const navbarSlice = res.results[0]?.data.slices[0]
@@ -33,24 +33,11 @@ export const getStaticProps = async () => {
   }
 }
 
-const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ page }) => {
-
-  const { navbar } = page
-
+const About: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({ page }) => {
+  const navbar = page.navbar
   return (
-    <>
-      <Head>
-        <title>Website Name</title>
-        <meta name="description" content="Made with create-t3-app" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Layout navbar={navbar}>
-        <div className="">
-          Landing Page
-        </div>
-      </Layout>
-    </>
-  );
-};
+    <Layout navbar={navbar}>About</Layout>
+  )
+}
 
-export default Home;
+export default About
