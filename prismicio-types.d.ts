@@ -55,6 +55,17 @@ interface NavbarDocumentData {
   navigation_items: prismicT.GroupField<
     Simplify<NavbarDocumentDataNavigationItemsItem>
   >;
+  /**
+   * logoUrl field in *Navbar*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: navbar.logourl
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/core-concepts/image
+   *
+   */
+  logourl: prismicT.ImageField<never>;
 }
 /**
  * Item in Navbar → Navigation Items
@@ -92,11 +103,7 @@ export interface NavbarDocumentDataNavigationItemsItem {
  * @typeParam Lang - Language API ID of the document.
  */
 export type NavbarDocument<Lang extends string = string> =
-  prismicT.PrismicDocumentWithoutUID<
-    Simplify<NavbarDocumentData>,
-    'navbar',
-    Lang
-  >;
+  prismicT.PrismicDocumentWithUID<Simplify<NavbarDocumentData>, 'navbar', Lang>;
 export type AllDocumentTypes = HomePageDocument | NavbarDocument;
 /**
  * Primary content in HeroSection → Primary

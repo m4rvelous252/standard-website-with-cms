@@ -20,6 +20,11 @@
             }
           }
         }
+      },
+      "uid": { "type": "UID", "config": { "label": "UID", "placeholder": "" } },
+      "logourl": {
+        "type": "Image",
+        "config": { "label": "logoUrl", "constraint": {}, "thumbnails": [] }
       }
     }
   }
