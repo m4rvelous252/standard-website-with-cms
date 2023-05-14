@@ -40,7 +40,64 @@ export type HomePageDocument<Lang extends string = string> =
     'home_page',
     Lang
   >;
-export type AllDocumentTypes = HomePageDocument;
+/** Content for Navbar documents */
+interface NavbarDocumentData {
+  /**
+   * Navigation Items field in *Navbar*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: navbar.navigation_items[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/core-concepts/group
+   *
+   */
+  navigation_items: prismicT.GroupField<
+    Simplify<NavbarDocumentDataNavigationItemsItem>
+  >;
+}
+/**
+ * Item in Navbar → Navigation Items
+ *
+ */
+export interface NavbarDocumentDataNavigationItemsItem {
+  /**
+   * label field in *Navbar → Navigation Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: navbar.navigation_items[].label
+   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+   *
+   */
+  label: prismicT.KeyTextField;
+  /**
+   * href field in *Navbar → Navigation Items*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: navbar.navigation_items[].href
+   * - **Documentation**: https://prismic.io/docs/core-concepts/link-content-relationship
+   *
+   */
+  href: prismicT.LinkField;
+}
+/**
+ * Navbar document from Prismic
+ *
+ * - **API ID**: `navbar`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type NavbarDocument<Lang extends string = string> =
+  prismicT.PrismicDocumentWithoutUID<
+    Simplify<NavbarDocumentData>,
+    'navbar',
+    Lang
+  >;
+export type AllDocumentTypes = HomePageDocument | NavbarDocument;
 /**
  * Primary content in HeroSection → Primary
  *
@@ -188,6 +245,9 @@ declare module '@prismicio/client' {
       HomePageDocumentData,
       HomePageDocumentDataSlicesSlice,
       HomePageDocument,
+      NavbarDocumentData,
+      NavbarDocumentDataNavigationItemsItem,
+      NavbarDocument,
       AllDocumentTypes,
       HeroSectionSliceDefaultPrimary,
       HeroSectionSliceDefault,

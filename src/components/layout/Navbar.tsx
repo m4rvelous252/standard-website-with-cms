@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { createClient } from "prismicio"
 
 interface NavbarProps {
   navigation?: {
@@ -6,6 +7,11 @@ interface NavbarProps {
     href: string
   }[] | undefined
   logoUrl?: string | undefined
+}
+
+const fetchNavbarDocument = async () => {
+  const client = createClient()
+
 }
 
 const Navbar = async ({ navigation, logoUrl }: NavbarProps) => {
