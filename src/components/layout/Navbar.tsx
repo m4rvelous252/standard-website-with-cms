@@ -8,7 +8,7 @@ interface NavbarProps {
   logoUrl?: string | undefined
 }
 
-const Navbar = ({ navigation, logoUrl }: NavbarProps) => {
+const Navbar = async ({ navigation, logoUrl }: NavbarProps) => {
   return (
     <header className="w-full">
       <div className="w-full max-w-[1440px] mx-auto px-4 flex items-center py-4 gap-10 shadow-md">
