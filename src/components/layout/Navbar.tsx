@@ -1,34 +1,41 @@
+'use client'
+
 import Link from "next/link"
-import { createClient } from "prismicio"
-import * as prismicH from '@prismicio/helpers'
+import { useEffect, useRef } from "react";
 
 interface NavbarProps {
+  navigationItems: {
+    label: string;
+    href: string | null;
+  }[];
+  logoUrl: string;
 }
 
-const fetchNavbarDocument = async () => {
-  const client = createClient()
-  const res = await client.getByUID('navbar', 'navbar')
+const Navbar = ({ navigationItems, logoUrl }: NavbarProps) => {
+  const navbarRef = useRef<HTMLDivElement>(null)
 
-  return {
-    navigationItems: res.data.navigation_items.map(item => ({
-      label: item.label,
-      href: prismicH.asLink(item.href)
-    })),
-    logoUrl: prismicH.asImageSrc(res.data.logourl) || ''
-  }
-}
+  useEffect(() => {
+    const navbar = navbarRef.current
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 64) {
+        navbar?.classList.replace('bg-transparent', 'bg-black')
+        navbar?.classList.replace('py-2', 'py-0')
+      } else {
+        navbar?.classList.replace('bg-black', 'bg-transparent')
+        navbar?.classList.replace('py-0', 'py-2')
+      }
+    })
+  }, [])
 
-const Navbar = async () => {
-  const { navigationItems, logoUrl } = await fetchNavbarDocument()
   return (
-    <header className="w-full shadow-md">
+    <header ref={navbarRef} className="w-full fixed top-0 bg-transparent py-2 z-50 text-white transition-all duration-700">
       <div className="w-full max-w-[1440px] mx-auto px-4 flex items-center py-4 gap-10">
         <div className="">
           <img src={logoUrl} alt="logo" className="h-8 w-auto" />
         </div>
         <ul className="flex gap-4">
           {navigationItems?.map(({ label, href }) => (
-            <li key={label} className="hover:text-primary transition-colors">
+            <li key={label} className="hover:opacity-100 opacity-80 transition-opacity">
               <Link href={href || ''}>{label}</Link>
             </li>
           ))}

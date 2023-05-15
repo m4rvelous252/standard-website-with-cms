@@ -1,6 +1,8 @@
 import Footer from "~/components/layout/Footer";
 import Navbar from "~/components/layout/Navbar";
 import '../styles/globals.css'
+import { createClient } from "prismicio"
+import * as prismicH from '@prismicio/helpers'
 
 export const metadata = {
   title: 'Website Name',
@@ -8,14 +10,28 @@ export const metadata = {
   content: 'Landing page'
 };
 
-export default function RootLayout({ children }: {
+const fetchNavbarDocument = async () => {
+  const client = createClient()
+  const res = await client.getByUID('navbar', 'navbar')
+
+  return {
+    navigationItems: res.data.navigation_items.map(item => ({
+      label: item.label,
+      href: prismicH.asLink(item.href)
+    })),
+    logoUrl: prismicH.asImageSrc(res.data.logourl) || ''
+  }
+}
+
+export default async function RootLayout({ children }: {
   children: React.ReactNode,
 }) {
+  const navbarData = await fetchNavbarDocument()
   return (
     <html lang="en">
       <body>
         {/* @ts-expect-error Server Component */}
-        <Navbar />
+        <Navbar {...navbarData} />
         <main>
           {children}
         </main>
