@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useEffect, useRef } from "react";
+import PageWidth from "./PageWidth";
 
 interface NavbarProps {
   navigationItems: {
@@ -29,7 +30,7 @@ const Navbar = ({ navigationItems, logoUrl }: NavbarProps) => {
 
   return (
     <header ref={navbarRef} className="w-full fixed top-0 bg-transparent py-2 z-50 text-white transition-all duration-700">
-      <div className="w-full max-w-[1440px] mx-auto px-4 flex items-center py-4 gap-10">
+      <PageWidth className="px-4 flex items-center py-4 gap-10">
         <div className="">
           <img src={logoUrl} alt="logo" className="h-8 w-auto" />
         </div>
@@ -40,7 +41,7 @@ const Navbar = ({ navigationItems, logoUrl }: NavbarProps) => {
             </li>
           ))}
         </ul>
-      </div>
+      </PageWidth>
     </header>
   )
 }

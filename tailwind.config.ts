@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#0de6a7',
+        primary: '#3FA7D6',
         secondary: '#e60d4c',
       },
       gridTemplateColumns: {
