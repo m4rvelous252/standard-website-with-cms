@@ -12,7 +12,7 @@ interface HeroSectionProps {
 const HeroSection: React.FC<HeroSectionProps> = ({ smallText, title, subTitle, buttonText, productImgUrl, backgroundImgUrl }) => {
   return (
     <section style={{ backgroundImage: `url('${backgroundImgUrl}')` }} className={`h-full w-full bg-cover bg-center relative pt-36 text-white `}>
-      <div className="absolute w-full h-full top-0 right-0 left-0 bottom-0 opacity-80 bg-gradient-to-r from-sky-800 to-indigo-500 z-10"></div>
+      <div className="absolute w-full h-full top-0 right-0 left-0 bottom-0 opacity-80 bg-gradient-to-r from-sky-200 to-indigo-500 z-10"></div>
       <PageWidth className="z-20 flex flex-col w-full items-center justify-center relative gap-6">
         <span className={`tracking-[.4em] font-medium`}>{smallText}</span>
         <h1 className={`text-5xl leading[64px] font-semibold max-w-4xl text-center`}>{title}</h1>

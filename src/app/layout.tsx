@@ -16,7 +16,7 @@ const fetchNavbarDocument = async () => {
 
   return {
     navigationItems: res.data.navigation_items.map(item => ({
-      label: item.label,
+      label: String(item.label),
       href: prismicH.asLink(item.href)
     })),
     logoUrl: prismicH.asImageSrc(res.data.logourl) || ''
@@ -30,7 +30,6 @@ export default async function RootLayout({ children }: {
   return (
     <html lang="en">
       <body>
-        {/* @ts-expect-error Server Component */}
         <Navbar {...navbarData} />
         <main>
           {children}
