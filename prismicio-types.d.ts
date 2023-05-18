@@ -24,7 +24,10 @@ interface HomePageDocumentData {
  * Slice for * Home page → Slice Zone*
  *
  */
-type HomePageDocumentDataSlicesSlice = HeroSectionSlice | NavbarSlice;
+type HomePageDocumentDataSlicesSlice =
+  | HeroSectionSlice
+  | NavbarSlice
+  | ClientHighlightSlice;
 /**
  *  Home page document from Prismic
  *
@@ -35,7 +38,7 @@ type HomePageDocumentDataSlicesSlice = HeroSectionSlice | NavbarSlice;
  * @typeParam Lang - Language API ID of the document.
  */
 export type HomePageDocument<Lang extends string = string> =
-  prismicT.PrismicDocumentWithoutUID<
+  prismicT.PrismicDocumentWithUID<
     Simplify<HomePageDocumentData>,
     'home_page',
     Lang
@@ -106,40 +109,136 @@ export type NavbarDocument<Lang extends string = string> =
   prismicT.PrismicDocumentWithUID<Simplify<NavbarDocumentData>, 'navbar', Lang>;
 export type AllDocumentTypes = HomePageDocument | NavbarDocument;
 /**
+ * Item in ClientHighlight → Items
+ *
+ */
+export interface ClientHighlightSliceDefaultItem {
+  /**
+   * name field in *ClientHighlight → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: client_highlight.items[].name
+   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+   *
+   */
+  name: prismicT.KeyTextField;
+  /**
+   * logoUrl field in *ClientHighlight → Items*
+   *
+   * - **Field Type**: Link to Media
+   * - **Placeholder**: *None*
+   * - **API ID Path**: client_highlight.items[].logourl
+   * - **Documentation**: https://prismic.io/docs/core-concepts/link-content-relationship
+   *
+   */
+  logourl: prismicT.LinkToMediaField;
+  /**
+   * href field in *ClientHighlight → Items*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: client_highlight.items[].href
+   * - **Documentation**: https://prismic.io/docs/core-concepts/link-content-relationship
+   *
+   */
+  href: prismicT.LinkField;
+}
+/**
+ * Default variation for ClientHighlight Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: `Default`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type ClientHighlightSliceDefault = prismicT.SharedSliceVariation<
+  'default',
+  Record<string, never>,
+  Simplify<ClientHighlightSliceDefaultItem>
+>;
+/**
+ * Slice variation for *ClientHighlight*
+ *
+ */
+type ClientHighlightSliceVariation = ClientHighlightSliceDefault;
+/**
+ * ClientHighlight Shared Slice
+ *
+ * - **API ID**: `client_highlight`
+ * - **Description**: `ClientHighlight`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type ClientHighlightSlice = prismicT.SharedSlice<
+  'client_highlight',
+  ClientHighlightSliceVariation
+>;
+/**
  * Primary content in HeroSection → Primary
  *
  */
 interface HeroSectionSliceDefaultPrimary {
   /**
-   * Call to Action field in *HeroSection → Primary*
+   * Small Text field in *HeroSection → Primary*
    *
-   * - **Field Type**: Rich Text
+   * - **Field Type**: Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: hero_section.primary.call_to_action
-   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+   * - **API ID Path**: hero_section.primary.small_text
+   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
    *
    */
-  call_to_action: prismicT.RichTextField;
+  small_text: prismicT.KeyTextField;
   /**
-   * Heading field in *HeroSection → Primary*
+   * Title field in *HeroSection → Primary*
    *
-   * - **Field Type**: Rich Text
+   * - **Field Type**: Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: hero_section.primary.heading
-   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+   * - **API ID Path**: hero_section.primary.title
+   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
    *
    */
-  heading: prismicT.RichTextField;
+  title: prismicT.KeyTextField;
   /**
-   * Sub Heading field in *HeroSection → Primary*
+   * Sub Title field in *HeroSection → Primary*
    *
-   * - **Field Type**: Rich Text
+   * - **Field Type**: Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: hero_section.primary.sub_heading
-   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+   * - **API ID Path**: hero_section.primary.sub_title
+   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
    *
    */
-  sub_heading: prismicT.RichTextField;
+  sub_title: prismicT.KeyTextField;
+  /**
+   * Button Text field in *HeroSection → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero_section.primary.button_text
+   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+   *
+   */
+  button_text: prismicT.KeyTextField;
+  /**
+   * Product Image field in *HeroSection → Primary*
+   *
+   * - **Field Type**: Link to Media
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero_section.primary.product_image
+   * - **Documentation**: https://prismic.io/docs/core-concepts/link-content-relationship
+   *
+   */
+  product_image: prismicT.LinkToMediaField;
+  /**
+   * Background Image field in *HeroSection → Primary*
+   *
+   * - **Field Type**: Link to Media
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero_section.primary.background_image
+   * - **Documentation**: https://prismic.io/docs/core-concepts/link-content-relationship
+   *
+   */
+  background_image: prismicT.LinkToMediaField;
 }
 /**
  * Default variation for HeroSection Slice
@@ -256,6 +355,10 @@ declare module '@prismicio/client' {
       NavbarDocumentDataNavigationItemsItem,
       NavbarDocument,
       AllDocumentTypes,
+      ClientHighlightSliceDefaultItem,
+      ClientHighlightSliceDefault,
+      ClientHighlightSliceVariation,
+      ClientHighlightSlice,
       HeroSectionSliceDefaultPrimary,
       HeroSectionSliceDefault,
       HeroSectionSliceVariation,

@@ -1,43 +1,54 @@
+import { createClient } from "prismicio"
 import ClientHighlight from "~/components/pages/home/ClientHighlight"
 import HeroSection from "~/components/pages/home/HeroSection"
+import * as prismicH from '@prismicio/helpers'
 
-const HeroSectionProps = {
-  smallText: 'AWESOME DESIGN',
-  title: 'We love make things amazing and simple',
-  subTitle: 'Maecenas class semper class semper sollicitudin lectus lorem iaculis imperdiet aliquam vehicula tempor auctor curabitur pede aenean ornare.',
-  buttonText: 'Get Started',
-  productImgUrl: '/assets/images/home-dashboard.png',
-  backgroundImgUrl: '/assets/images/img-2.jpg',
-}
+const fetchHomePageData = async () => {
+  const client = createClient()
+  const res = await client.getByUID('home_page', 'home-page')
 
-const ClientHighlightProps = {
-  clients: [
-    {
-      name: 'Meta',
-      logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Meta_Platforms_Inc._logo.svg/2560px-Meta_Platforms_Inc._logo.svg.png',
+  const heroSectionData = res.data.slices.find(slice => slice.slice_type === 'hero_section')
+  const clientHighlight = res.data.slices.find(slice => slice.slice_type === 'client_highlight')
+
+  if (heroSectionData?.slice_type !== 'hero_section' || clientHighlight?.slice_type !== 'client_highlight') return { HeroSectionProps: undefined, ClientHighlightProps: undefined }
+
+  return {
+    HeroSectionProps: {
+      smallText: String(heroSectionData.primary.small_text),
+      title: String(heroSectionData.primary.title),
+      subTitle: String(heroSectionData.primary.sub_title),
+      buttonText: String(heroSectionData.primary.button_text),
+      productImgUrl: prismicH.asLink(heroSectionData.primary.product_image) || '',
+      backgroundImgUrl: prismicH.asLink(heroSectionData.primary.background_image) || '',
     },
-    {
-      name: 'Google',
-      logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/2560px-Google_2015_logo.svg.png',
-    },
-    {
-      name: 'Microsoft',
-      logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/1280px-Microsoft_logo_%282012%29.svg.png',
-    },
-    {
-      name: 'Riot',
-      logoUrl: 'https://d1.awsstatic.com/002_RG_2021_FULL_LOCKUP_RED.5627f0de6611fcc949c7966209c7b802a0724ddd.png',
+    ClientHighlightProps: {
+      clients: clientHighlight.items.map(client => ({
+        name: String(client.name),
+        logoUrl: prismicH.asLink(client.logourl) || '',
+        href: prismicH.asLink(client.href) || ''
+      }))
     }
-  ]
+  }
+
 }
 
-function Home() {
-  return (
-    <>
-      <HeroSection {...HeroSectionProps} />
-      <ClientHighlight {...ClientHighlightProps} />
-    </>
-  )
+async function Home() {
+  const { HeroSectionProps, ClientHighlightProps } = await fetchHomePageData()
+
+  if (HeroSectionProps && ClientHighlightProps) {
+    return (
+      <>
+        <HeroSection {...HeroSectionProps} />
+        <ClientHighlight {...ClientHighlightProps} />
+      </>
+    )
+  } else {
+    return (
+      <div>
+        ERROR
+      </div>
+    )
+  }
 }
 
 export default Home
