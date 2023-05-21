@@ -4,6 +4,7 @@ import HeroSection from "~/components/pages/home/HeroSection"
 import FeatureSection from "~/components/pages/home/FeatureSection"
 import * as prismicH from '@prismicio/helpers'
 import ServiceSection from "~/components/pages/home/ServiceSection"
+import AboutSection from "~/components/pages/home/AboutSection"
 
 const fetchHomePageData = async () => {
   const client = createClient()
@@ -86,6 +87,34 @@ const ServiceSectionProps = {
   ]
 }
 
+
+const AboutSectionProps = {
+  heading: 'A Digital web studio creating stunning & Engaging online Experiences',
+  subHeading: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus donec various versions have evolved quam felis.',
+  members: [
+    {
+      name: 'Frank Johnson',
+      role: 'CEO',
+      imgUrl: 'assets/images/team/img-1.jpg'
+    },
+    {
+      name: 'Elaine Stclair',
+      role: 'Designer',
+      imgUrl: 'assets/images/team/img-2.jpg'
+    },
+    {
+      name: 'Wanda Arthur',
+      role: 'Developer',
+      imgUrl: 'assets/images/team/img-3.jpg'
+    },
+    {
+      name: 'Jane Stemple',
+      role: 'Manager',
+      imgUrl: 'assets/images/team/img-4.jpg'
+    },
+  ]
+}
+
 async function Home() {
   const { HeroSectionProps, ClientHighlightProps } = await fetchHomePageData()
 
@@ -96,6 +125,7 @@ async function Home() {
         <ClientHighlight {...ClientHighlightProps} />
         <FeatureSection {...FeatureSectionProps} />
         <ServiceSection {...ServiceSectionProps} />
+        <AboutSection {...AboutSectionProps} />
       </>
     )
   } else {

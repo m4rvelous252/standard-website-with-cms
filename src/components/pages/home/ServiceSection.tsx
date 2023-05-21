@@ -38,7 +38,7 @@ const ServiceSection = ({ services, heading, subHeading }: ServiceProps) => {
       <PageWidth className='flex flex-col items-center justify-center gap-10'>
         <h1 className='font-bold text-3xl'>{heading}</h1>
         <div className="w-[100px] h-1 bg-primary"></div>
-        <h4 className='text-gray-400'>{subHeading}</h4>
+        <h4 className='text-gray-400 lg:max-w-2xl text-center'>{subHeading}</h4>
         <ul className='grid grid-cols-1 gap-8 lg:grid-cols-3 lg:gap-12'>
           {services.map(({ name, description }, index) => (
             <li className='flex items-start'>
