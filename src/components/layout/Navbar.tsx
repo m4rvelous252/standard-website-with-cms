@@ -14,9 +14,11 @@ interface NavbarProps {
 
 const Navbar = ({ navigationItems, logoUrl }: NavbarProps) => {
   const navbarRef = useRef<HTMLDivElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     const navbar = navbarRef.current
+    const button = buttonRef.current
     window.addEventListener('scroll', () => {
       if (window.pageYOffset > 64) {
         navbar?.classList.replace('bg-transparent', 'bg-white')
@@ -38,13 +40,14 @@ const Navbar = ({ navigationItems, logoUrl }: NavbarProps) => {
         <div className="cursor-pointer">
           <img src={logoUrl} alt="logo" className="h-16 w-auto" />
         </div>
-        <ul className="flex gap-8">
+        <ul className="flex flex-1 gap-8">
           {navigationItems?.map(({ label, href }) => (
             <li key={label} className="hover:opacity-100 opacity-70 transition-opacity">
               <Link href={href || ''}>{label}</Link>
             </li>
           ))}
         </ul>
+        <button ref={buttonRef} className="bg-primary py-3 px-6 rounded-full text-white shadow hover:opacity-70 transition-opacity duration-500">Contact us</button>
       </PageWidth>
     </header>
   )

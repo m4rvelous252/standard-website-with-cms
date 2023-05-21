@@ -1,6 +1,7 @@
 import { createClient } from "prismicio"
 import ClientHighlight from "~/components/pages/home/ClientHighlight"
 import HeroSection from "~/components/pages/home/HeroSection"
+import FeatureSection from "~/components/pages/home/FeatureSection"
 import * as prismicH from '@prismicio/helpers'
 
 const fetchHomePageData = async () => {
@@ -32,6 +33,14 @@ const fetchHomePageData = async () => {
 
 }
 
+const FeatureSectionProps = {
+  heading: 'A digital web design studio creating modern & engaging online',
+  subHeading: 'Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.',
+  bulletPoints: ['We put a lot of effort in design.', 'The most important ingredient of successful website.', 'Submit Your Orgnization.'],
+  buttonText: 'Learn more',
+  imgUrl: 'assets/images/growth-analytics.svg'
+}
+
 async function Home() {
   const { HeroSectionProps, ClientHighlightProps } = await fetchHomePageData()
 
@@ -40,6 +49,7 @@ async function Home() {
       <>
         <HeroSection {...HeroSectionProps} />
         <ClientHighlight {...ClientHighlightProps} />
+        <FeatureSection {...FeatureSectionProps} />
       </>
     )
   } else {
