@@ -38,7 +38,7 @@ const Navbar = ({ navigationItems, logoUrl }: NavbarProps) => {
         <div className="cursor-pointer">
           <img src={logoUrl} alt="logo" className="h-16 w-auto" />
         </div>
-        <ul className="flex gap-4">
+        <ul className="flex gap-8">
           {navigationItems?.map(({ label, href }) => (
             <li key={label} className="hover:opacity-100 opacity-70 transition-opacity">
               <Link href={href || ''}>{label}</Link>

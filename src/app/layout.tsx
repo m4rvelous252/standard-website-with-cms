@@ -10,6 +10,59 @@ export const metadata = {
   content: 'Landing page'
 };
 
+
+const FooterData = {
+  menu: [
+    {
+      title: 'DPS',
+      items: [
+        {
+          label: 'Home',
+          href: '/'
+        },
+        {
+          label: 'About us',
+          href: 'about'
+        },
+        {
+          label: 'Careers',
+          href: '/careers'
+        },
+        {
+          label: 'Contact us',
+          href: '/contact'
+        },
+      ]
+    },
+    {
+      title: 'Information',
+      items: [
+        {
+          label: 'Terms & Condition',
+          href: '/terms-and-condition'
+        },
+        {
+          label: 'Jobs',
+          href: '/jobs'
+        },
+      ]
+    },
+    {
+      title: 'Support',
+      items: [
+        {
+          label: 'FAQ',
+          href: '/faq'
+        },
+        {
+          label: 'Disscusion',
+          href: '/disscusion'
+        },
+      ]
+    },
+  ]
+}
+
 const fetchNavbarDocument = async () => {
   const client = createClient()
   const res = await client.getByUID('navbar', 'navbar')
@@ -34,7 +87,7 @@ export default async function RootLayout({ children }: {
         <main>
           {children}
         </main>
-        <Footer />
+        <Footer {...FooterData} />
       </body>
     </html>
   )
