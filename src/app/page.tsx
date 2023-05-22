@@ -13,7 +13,10 @@ const fetchHomePageData = async () => {
   const heroSectionData = res.data.slices.find(slice => slice.slice_type === 'hero_section')
   const clientHighlight = res.data.slices.find(slice => slice.slice_type === 'client_highlight')
 
-  if (heroSectionData?.slice_type !== 'hero_section' || clientHighlight?.slice_type !== 'client_highlight') return { HeroSectionProps: undefined, ClientHighlightProps: undefined }
+  if (
+    heroSectionData?.slice_type !== 'hero_section' ||
+    clientHighlight?.slice_type !== 'client_highlight'
+  ) return { HeroSectionProps: undefined, ClientHighlightProps: undefined }
 
   return {
     HeroSectionProps: {

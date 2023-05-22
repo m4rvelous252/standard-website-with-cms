@@ -6,6 +6,23 @@ import type * as prismic from '@prismicio/client';
 type Simplify<T> = {
   [KeyType in keyof T]: T[KeyType];
 };
+/** Content for Footer documents */
+type FooterDocumentData = Record<string, never>;
+/**
+ * Footer document from Prismic
+ *
+ * - **API ID**: `footer`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type FooterDocument<Lang extends string = string> =
+  prismicT.PrismicDocumentWithoutUID<
+    Simplify<FooterDocumentData>,
+    'footer',
+    Lang
+  >;
 /** Content for  Home page documents */
 interface HomePageDocumentData {
   /**
@@ -27,7 +44,10 @@ interface HomePageDocumentData {
 type HomePageDocumentDataSlicesSlice =
   | HeroSectionSlice
   | NavbarSlice
-  | ClientHighlightSlice;
+  | ClientHighlightSlice
+  | FeatureSectionSlice
+  | AboutSectionSlice
+  | ServiceSectionSlice;
 /**
  *  Home page document from Prismic
  *
@@ -107,7 +127,102 @@ export interface NavbarDocumentDataNavigationItemsItem {
  */
 export type NavbarDocument<Lang extends string = string> =
   prismicT.PrismicDocumentWithUID<Simplify<NavbarDocumentData>, 'navbar', Lang>;
-export type AllDocumentTypes = HomePageDocument | NavbarDocument;
+export type AllDocumentTypes =
+  | FooterDocument
+  | HomePageDocument
+  | NavbarDocument;
+/**
+ * Primary content in AboutSection → Primary
+ *
+ */
+interface AboutSectionSliceDefaultPrimary {
+  /**
+   * Heading field in *AboutSection → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about_section.primary.heading
+   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+   *
+   */
+  heading: prismicT.KeyTextField;
+  /**
+   * Sub Heading field in *AboutSection → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about_section.primary.sub_heading
+   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+   *
+   */
+  sub_heading: prismicT.KeyTextField;
+}
+/**
+ * Item in AboutSection → Items
+ *
+ */
+export interface AboutSectionSliceDefaultItem {
+  /**
+   * Name field in *AboutSection → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about_section.items[].name
+   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+   *
+   */
+  name: prismicT.KeyTextField;
+  /**
+   * Role field in *AboutSection → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about_section.items[].role
+   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+   *
+   */
+  role: prismicT.KeyTextField;
+  /**
+   * Image field in *AboutSection → Items*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: about_section.items[].image
+   * - **Documentation**: https://prismic.io/docs/core-concepts/image
+   *
+   */
+  image: prismicT.ImageField<never>;
+}
+/**
+ * Default variation for AboutSection Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: `Default`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type AboutSectionSliceDefault = prismicT.SharedSliceVariation<
+  'default',
+  Simplify<AboutSectionSliceDefaultPrimary>,
+  Simplify<AboutSectionSliceDefaultItem>
+>;
+/**
+ * Slice variation for *AboutSection*
+ *
+ */
+type AboutSectionSliceVariation = AboutSectionSliceDefault;
+/**
+ * AboutSection Shared Slice
+ *
+ * - **API ID**: `about_section`
+ * - **Description**: `AboutSection`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type AboutSectionSlice = prismicT.SharedSlice<
+  'about_section',
+  AboutSectionSliceVariation
+>;
 /**
  * Item in ClientHighlight → Items
  *
@@ -173,6 +288,98 @@ type ClientHighlightSliceVariation = ClientHighlightSliceDefault;
 export type ClientHighlightSlice = prismicT.SharedSlice<
   'client_highlight',
   ClientHighlightSliceVariation
+>;
+/**
+ * Primary content in FeatureSection → Primary
+ *
+ */
+interface FeatureSectionSliceDefaultPrimary {
+  /**
+   * heading field in *FeatureSection → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: feature_section.primary.heading
+   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+   *
+   */
+  heading: prismicT.KeyTextField;
+  /**
+   * Sub Heading field in *FeatureSection → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: feature_section.primary.sub_heading
+   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+   *
+   */
+  sub_heading: prismicT.KeyTextField;
+  /**
+   * Button Text field in *FeatureSection → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: feature_section.primary.button_text
+   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+   *
+   */
+  button_text: prismicT.KeyTextField;
+  /**
+   * Image field in *FeatureSection → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: feature_section.primary.image
+   * - **Documentation**: https://prismic.io/docs/core-concepts/image
+   *
+   */
+  image: prismicT.ImageField<never>;
+}
+/**
+ * Item in FeatureSection → Items
+ *
+ */
+export interface FeatureSectionSliceDefaultItem {
+  /**
+   * Bullet Points field in *FeatureSection → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: feature_section.items[].bullet_points
+   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+   *
+   */
+  bullet_points: prismicT.KeyTextField;
+}
+/**
+ * Default variation for FeatureSection Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: `Default`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type FeatureSectionSliceDefault = prismicT.SharedSliceVariation<
+  'default',
+  Simplify<FeatureSectionSliceDefaultPrimary>,
+  Simplify<FeatureSectionSliceDefaultItem>
+>;
+/**
+ * Slice variation for *FeatureSection*
+ *
+ */
+type FeatureSectionSliceVariation = FeatureSectionSliceDefault;
+/**
+ * FeatureSection Shared Slice
+ *
+ * - **API ID**: `feature_section`
+ * - **Description**: `FeatureSection`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type FeatureSectionSlice = prismicT.SharedSlice<
+  'feature_section',
+  FeatureSectionSliceVariation
 >;
 /**
  * Primary content in HeroSection → Primary
@@ -339,6 +546,88 @@ type NavbarSliceVariation = NavbarSliceDefault;
  *
  */
 export type NavbarSlice = prismicT.SharedSlice<'navbar', NavbarSliceVariation>;
+/**
+ * Primary content in ServiceSection → Primary
+ *
+ */
+interface ServiceSectionSliceDefaultPrimary {
+  /**
+   * Heading field in *ServiceSection → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: service_section.primary.heading
+   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+   *
+   */
+  heading: prismicT.KeyTextField;
+  /**
+   * Sub Heading field in *ServiceSection → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: service_section.primary.sub_heading
+   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+   *
+   */
+  sub_heading: prismicT.KeyTextField;
+}
+/**
+ * Item in ServiceSection → Items
+ *
+ */
+export interface ServiceSectionSliceDefaultItem {
+  /**
+   * Name field in *ServiceSection → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: service_section.items[].name
+   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+   *
+   */
+  name: prismicT.KeyTextField;
+  /**
+   * Description field in *ServiceSection → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: service_section.items[].description
+   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+   *
+   */
+  description: prismicT.KeyTextField;
+}
+/**
+ * Default variation for ServiceSection Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: `Default`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type ServiceSectionSliceDefault = prismicT.SharedSliceVariation<
+  'default',
+  Simplify<ServiceSectionSliceDefaultPrimary>,
+  Simplify<ServiceSectionSliceDefaultItem>
+>;
+/**
+ * Slice variation for *ServiceSection*
+ *
+ */
+type ServiceSectionSliceVariation = ServiceSectionSliceDefault;
+/**
+ * ServiceSection Shared Slice
+ *
+ * - **API ID**: `service_section`
+ * - **Description**: `ServiceSection`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type ServiceSectionSlice = prismicT.SharedSlice<
+  'service_section',
+  ServiceSectionSliceVariation
+>;
 declare module '@prismicio/client' {
   interface CreateClient {
     (
@@ -348,6 +637,8 @@ declare module '@prismicio/client' {
   }
   namespace Content {
     export type {
+      FooterDocumentData,
+      FooterDocument,
       HomePageDocumentData,
       HomePageDocumentDataSlicesSlice,
       HomePageDocument,
@@ -355,10 +646,20 @@ declare module '@prismicio/client' {
       NavbarDocumentDataNavigationItemsItem,
       NavbarDocument,
       AllDocumentTypes,
+      AboutSectionSliceDefaultPrimary,
+      AboutSectionSliceDefaultItem,
+      AboutSectionSliceDefault,
+      AboutSectionSliceVariation,
+      AboutSectionSlice,
       ClientHighlightSliceDefaultItem,
       ClientHighlightSliceDefault,
       ClientHighlightSliceVariation,
       ClientHighlightSlice,
+      FeatureSectionSliceDefaultPrimary,
+      FeatureSectionSliceDefaultItem,
+      FeatureSectionSliceDefault,
+      FeatureSectionSliceVariation,
+      FeatureSectionSlice,
       HeroSectionSliceDefaultPrimary,
       HeroSectionSliceDefault,
       HeroSectionSliceVariation,
@@ -368,6 +669,11 @@ declare module '@prismicio/client' {
       NavbarSliceDefault,
       NavbarSliceVariation,
       NavbarSlice,
+      ServiceSectionSliceDefaultPrimary,
+      ServiceSectionSliceDefaultItem,
+      ServiceSectionSliceDefault,
+      ServiceSectionSliceVariation,
+      ServiceSectionSlice,
     };
   }
 }

@@ -13,7 +13,10 @@
           "choices": {
             "hero_section": { "type": "SharedSlice" },
             "navbar": { "type": "SharedSlice" },
-            "client_highlight": { "type": "SharedSlice" }
+            "client_highlight": { "type": "SharedSlice" },
+            "feature_section": { "type": "SharedSlice" },
+            "about_section": { "type": "SharedSlice" },
+            "service_section": { "type": "SharedSlice" }
           }
         }
       }
