@@ -35,11 +35,7 @@ type FooterDocumentDataSlicesSlice = MenuItemSlice;
  * @typeParam Lang - Language API ID of the document.
  */
 export type FooterDocument<Lang extends string = string> =
-  prismicT.PrismicDocumentWithoutUID<
-    Simplify<FooterDocumentData>,
-    'footer',
-    Lang
-  >;
+  prismicT.PrismicDocumentWithUID<Simplify<FooterDocumentData>, 'footer', Lang>;
 /** Content for  Home page documents */
 interface HomePageDocumentData {
   /**

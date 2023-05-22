@@ -76,10 +76,25 @@ const fetchNavbarDocument = async () => {
   }
 }
 
+const fetchFooterDocument = async () => {
+  const client = createClient()
+  const res = await client.getByUID('footer', 'footer')
+
+  return {
+    menu: res.data.slices.map(menu => ({
+      title: String(menu.primary.title),
+      items: menu.items.map(item => ({
+        label: String(item.label),
+        href: String(item.href)
+      }))
+    }))
+  }
+}
+
 export default async function RootLayout({ children }: {
   children: React.ReactNode,
 }) {
-  const navbarData = await fetchNavbarDocument()
+  const [navbarData, footerData] = await Promise.all([fetchNavbarDocument(), fetchFooterDocument()])
   return (
     <html lang="en">
       <body>
@@ -87,7 +102,7 @@ export default async function RootLayout({ children }: {
         <main>
           {children}
         </main>
-        <Footer {...FooterData} />
+        <Footer {...footerData} />
       </body>
     </html>
   )
