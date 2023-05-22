@@ -10,12 +10,18 @@ const fetchHomePageData = async () => {
   const client = createClient()
   const res = await client.getByUID('home_page', 'home-page')
 
-  const heroSectionData = res.data.slices.find(slice => slice.slice_type === 'hero_section')
+  const heroSectionData = res.data.slices.find((slice) => slice.slice_type === 'hero_section')
   const clientHighlight = res.data.slices.find(slice => slice.slice_type === 'client_highlight')
+  const featureSectionProps = res.data.slices.find(slice => slice.slice_type === 'feature_section')
+  const serviceSectionProps = res.data.slices.find(slice => slice.slice_type === 'service_section')
+  const aboutSectionProps = res.data.slices.find(slice => slice.slice_type === 'about_section')
 
   if (
     heroSectionData?.slice_type !== 'hero_section' ||
-    clientHighlight?.slice_type !== 'client_highlight'
+    clientHighlight?.slice_type !== 'client_highlight' ||
+    featureSectionProps?.slice_type !== 'feature_section' ||
+    serviceSectionProps?.slice_type !== 'service_section' ||
+    aboutSectionProps?.slice_type !== 'about_section'
   ) return { HeroSectionProps: undefined, ClientHighlightProps: undefined }
 
   return {
@@ -33,93 +39,43 @@ const fetchHomePageData = async () => {
         logoUrl: prismicH.asLink(client.logourl) || '',
         href: prismicH.asLink(client.href) || ''
       }))
+    },
+    FeatureSectionProps: {
+      heading: String(featureSectionProps.primary.heading),
+      subHeading: String(featureSectionProps.primary.sub_heading),
+      bulletPoints: featureSectionProps.items.map(item => String(item.bullet_points)),
+      buttonText: String(featureSectionProps.primary.button_text),
+      imgUrl: featureSectionProps.primary.image.url || ''
+    },
+    ServiceSectionProps: {
+      heading: String(serviceSectionProps.primary.heading),
+      subHeading: String(serviceSectionProps.primary.sub_heading),
+      services: serviceSectionProps.items.map(item => ({
+        name: String(item.name),
+        description: String(item.description)
+      }))
+    },
+    AboutSectionProps: {
+      heading: String(aboutSectionProps.primary.heading),
+      subHeading: String(aboutSectionProps.primary.sub_heading),
+      members: aboutSectionProps.items.map(item => ({
+        name: String(item.name),
+        role: String(item.role),
+        imgUrl: item.image.url || ''
+      }))
     }
   }
 
 }
 
-const FeatureSectionProps = {
-  heading: 'A digital web design studio creating modern & engaging online',
-  subHeading: 'Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.',
-  bulletPoints: ['We put a lot of effort in design.', 'The most important ingredient of successful website.', 'Submit Your Orgnization.'],
-  buttonText: 'Learn more',
-  imgUrl: 'assets/images/growth-analytics.svg'
-}
-
-
-const ServiceSectionProps = {
-  heading: 'Our Services',
-  subHeading: 'We craft digital, graphic and dimensional thinking, to create category leading brand experiences that have meaning and add a value for our clients.',
-  services: [
-    {
-      name: 'Digital Design',
-      description: "Some quick example text to build on the card title and make up the bulk of the card's content. Moltin gives you the platform.",
-    },
-    {
-      name: 'Unlimited Colors',
-      description: "Credibly brand standards compliant users without extensible services. Anibh euismod tincidunt ut laoreet Ipsum passage.",
-    },
-    {
-      name: 'Strategy Solutions',
-      description: "Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean necessary regelialia.",
-    },
-    {
-      name: 'Awesome Support',
-      description: "It is a paradisematic country, in which roasted parts of sentences fly into your mouth leave for the far World.",
-    },
-    {
-      name: 'Truly Multipurpose',
-      description: "Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.",
-    },
-    {
-      name: 'Easy to customize',
-      description: "Question Marks and devious Semikoli, but the Little Blind Text didn’t listen. She packed her seven versalia.",
-    },
-    {
-      name: 'Pixel Perfect Design',
-      description: "Some quick example text to build on the card title and make up the bulk of the card's content. Moltin gives you the platform.",
-    },
-    {
-      name: 'Perfect Toolbox',
-      description: "Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur.",
-    },
-    {
-      name: 'Awesome Design',
-      description: "All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary.",
-    },
-  ]
-}
-
-
-const AboutSectionProps = {
-  heading: 'A Digital web studio creating stunning & Engaging online Experiences',
-  subHeading: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus donec various versions have evolved quam felis.',
-  members: [
-    {
-      name: 'Frank Johnson',
-      role: 'CEO',
-      imgUrl: 'assets/images/team/img-1.jpg'
-    },
-    {
-      name: 'Elaine Stclair',
-      role: 'Designer',
-      imgUrl: 'assets/images/team/img-2.jpg'
-    },
-    {
-      name: 'Wanda Arthur',
-      role: 'Developer',
-      imgUrl: 'assets/images/team/img-3.jpg'
-    },
-    {
-      name: 'Jane Stemple',
-      role: 'Manager',
-      imgUrl: 'assets/images/team/img-4.jpg'
-    },
-  ]
-}
-
 async function Home() {
-  const { HeroSectionProps, ClientHighlightProps } = await fetchHomePageData()
+  const {
+    HeroSectionProps,
+    ClientHighlightProps,
+    FeatureSectionProps,
+    ServiceSectionProps,
+    AboutSectionProps,
+  } = await fetchHomePageData()
 
   if (HeroSectionProps && ClientHighlightProps) {
     return (
