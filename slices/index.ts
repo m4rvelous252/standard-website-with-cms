@@ -7,6 +7,7 @@ export const components = {
   client_highlight: dynamic(() => import('./ClientHighlight')),
   feature_section: dynamic(() => import('./FeatureSection')),
   hero_section: dynamic(() => import('./HeroSection')),
+  menu_item: dynamic(() => import('./MenuItem')),
   navbar: dynamic(() => import('./Navbar')),
   service_section: dynamic(() => import('./ServiceSection')),
 };

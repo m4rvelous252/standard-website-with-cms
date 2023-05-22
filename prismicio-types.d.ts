@@ -7,7 +7,24 @@ type Simplify<T> = {
   [KeyType in keyof T]: T[KeyType];
 };
 /** Content for Footer documents */
-type FooterDocumentData = Record<string, never>;
+interface FooterDocumentData {
+  /**
+   * Slice Zone field in *Footer*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: footer.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/core-concepts/slices
+   *
+   */
+  slices: prismicT.SliceZone<FooterDocumentDataSlicesSlice>;
+}
+/**
+ * Slice for *Footer → Slice Zone*
+ *
+ */
+type FooterDocumentDataSlicesSlice = MenuItemSlice;
 /**
  * Footer document from Prismic
  *
@@ -478,6 +495,78 @@ export type HeroSectionSlice = prismicT.SharedSlice<
   HeroSectionSliceVariation
 >;
 /**
+ * Primary content in MenuItem → Primary
+ *
+ */
+interface MenuItemSliceDefaultPrimary {
+  /**
+   * Title field in *MenuItem → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: menu_item.primary.title
+   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+   *
+   */
+  title: prismicT.KeyTextField;
+}
+/**
+ * Item in MenuItem → Items
+ *
+ */
+export interface MenuItemSliceDefaultItem {
+  /**
+   * Label field in *MenuItem → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: menu_item.items[].label
+   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+   *
+   */
+  label: prismicT.KeyTextField;
+  /**
+   * href field in *MenuItem → Items*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: menu_item.items[].href
+   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+   *
+   */
+  href: prismicT.KeyTextField;
+}
+/**
+ * Default variation for MenuItem Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: `Default`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type MenuItemSliceDefault = prismicT.SharedSliceVariation<
+  'default',
+  Simplify<MenuItemSliceDefaultPrimary>,
+  Simplify<MenuItemSliceDefaultItem>
+>;
+/**
+ * Slice variation for *MenuItem*
+ *
+ */
+type MenuItemSliceVariation = MenuItemSliceDefault;
+/**
+ * MenuItem Shared Slice
+ *
+ * - **API ID**: `menu_item`
+ * - **Description**: `MenuItem`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type MenuItemSlice = prismicT.SharedSlice<
+  'menu_item',
+  MenuItemSliceVariation
+>;
+/**
  * Primary content in Navbar → Primary
  *
  */
@@ -638,6 +727,7 @@ declare module '@prismicio/client' {
   namespace Content {
     export type {
       FooterDocumentData,
+      FooterDocumentDataSlicesSlice,
       FooterDocument,
       HomePageDocumentData,
       HomePageDocumentDataSlicesSlice,
@@ -664,6 +754,11 @@ declare module '@prismicio/client' {
       HeroSectionSliceDefault,
       HeroSectionSliceVariation,
       HeroSectionSlice,
+      MenuItemSliceDefaultPrimary,
+      MenuItemSliceDefaultItem,
+      MenuItemSliceDefault,
+      MenuItemSliceVariation,
+      MenuItemSlice,
       NavbarSliceDefaultPrimary,
       NavbarSliceDefaultItem,
       NavbarSliceDefault,

@@ -22,7 +22,7 @@ const FooterData = {
         },
         {
           label: 'About us',
-          href: 'about'
+          href: '/about'
         },
         {
           label: 'Careers',
