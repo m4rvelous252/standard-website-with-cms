@@ -67,6 +67,8 @@ const fetchNavbarDocument = async () => {
   const client = createClient()
   const res = await client.getByUID('navbar', 'navbar')
 
+  console.log(res.data.navigation_items)
+
   return {
     navigationItems: res.data.navigation_items.map(item => ({
       label: String(item.label),
