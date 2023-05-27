@@ -58,7 +58,7 @@ const Navbar = ({ navigationItems, logoUrl }: NavbarProps) => {
         <ul className={`flex flex-col flex-1 text-[18px] justify-end gap-2 overflow-hidden`}>
           {navigationItems?.map(({ label, href }) => (
             <li className={`leading-[1.5] text-black first:pt-4`} key={label}>
-              <Link href={href || ''}>{label}</Link>
+              <Link href={href || '#'}>{label}</Link>
             </li>
           ))}
         </ul>
