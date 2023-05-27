@@ -17,7 +17,7 @@ const Navbar = ({ navigation, logoUrl }: NavbarProps) => {
         </div>
         <ul className="flex gap-4">
           {navigation?.map(({ label, href }) => (
-            <li className="hover:text-primary transition-colors">
+            <li key={label} className="hover:text-primary transition-colors">
               <Link href={href}>{label}</Link>
             </li>
           ))}
