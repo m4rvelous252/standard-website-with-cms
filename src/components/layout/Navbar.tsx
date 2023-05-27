@@ -17,7 +17,7 @@ const Navbar = ({ navigationItems, logoUrl }: NavbarProps) => {
 
   const [showMobileNav, setShowMobileNav] = useState(false)
   useEffect(() => {
-    
+
     const navbar = navbarRef.current
     window.addEventListener('scroll', () => {
       if (window.pageYOffset > 64) {
@@ -49,21 +49,21 @@ const Navbar = ({ navigationItems, logoUrl }: NavbarProps) => {
         </ul>
         <button className="hidden lg:block bg-primary py-3 px-6 rounded-full text-white shadow hover:opacity-70 transition-opacity duration-500">Contact us</button>
         <button onClick={() => setShowMobileNav(prev => !prev)} className="border border-primary px-2 py-4 flex flex-col justify-center relative lg:!hidden rounded-md">
-          <div className={`absolute ${showMobileNav ? 'rotate-45' : 'translate-y-2' } border border-primary w-6 transition-all duration-500`}></div>
-          <div className={`border ${showMobileNav && 'opacity-0'} border-primary w-6 transition-all duration-500`}></div>
-          <div className={`absolute ${showMobileNav ? 'rotate-[135deg]' : '-translate-y-2' } border border-primary w-6 transition-all duration-500`}></div>
+          <div className={`absolute ${showMobileNav ? 'rotate-45' : 'translate-y-2'} border border-primary w-6 transition-all duration-500`}></div>
+          <div className={`border ${showMobileNav ? 'opacity-0' : ''} border-primary w-6 transition-all duration-500`}></div>
+          <div className={`absolute ${showMobileNav ? 'rotate-[135deg]' : '-translate-y-2'} border border-primary w-6 transition-all duration-500`}></div>
         </button>
       </PageWidth>
       <div className={`${showMobileNav ? 'grid-rows-[1fr] pb-6' : 'grid-rows-[0fr]'} grid page-width transition-all duration-500 lg:hidden px-10`}>
         <ul className={`flex flex-col flex-1 text-[18px] justify-end gap-2 overflow-hidden`}>
-            {navigationItems?.map(({ label, href }) => (
-              <li className={`leading-[1.5] text-black first:pt-4`} key={label}>
-                <Link href={href || ''}>{label}</Link>
-              </li>
-            ))}
+          {navigationItems?.map(({ label, href }) => (
+            <li className={`leading-[1.5] text-black first:pt-4`} key={label}>
+              <Link href={href || ''}>{label}</Link>
+            </li>
+          ))}
         </ul>
       </div>
-      
+
     </header>
   )
 }

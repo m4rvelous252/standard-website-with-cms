@@ -13,7 +13,7 @@ const ClientHighlight: React.FC<ClientHighlightProps> = ({ clients }) => {
     <section className="w-full bg-gray-50 saturate-0">
       <PageWidth className={`flex flex-col md:flex-row items-center justify-between gap-8 py-16 md:py-8`}>
         {clients.map(client => (
-          <a className={`w-1/2 md:w-1/5`} href={client.href || '#'}>
+          <a key={client.name} className={`w-1/2 md:w-1/5`} href={client.href || '#'}>
             <img src={client.logoUrl} alt={client.name} />
           </a>
         ))}

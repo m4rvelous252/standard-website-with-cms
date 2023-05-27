@@ -19,8 +19,8 @@ const FeatureSection = ({ heading, subHeading, bulletPoints, buttonText, imgUrl 
           <h1 className="text-black text-2xl font-semibold">{heading}</h1>
           <h4>{subHeading}</h4>
           <ul className="list-disc pl-4">
-            {bulletPoints.map(point => (
-              <li className="marker:text-primary">{point}</li>
+            {bulletPoints.map((point, index) => (
+              <li key={index} className="marker:text-primary">{point}</li>
             ))}
           </ul>
           <button className="flex items-center bg-primary py-2 px-4 rounded-md text-white w-fit">{buttonText} →</button>

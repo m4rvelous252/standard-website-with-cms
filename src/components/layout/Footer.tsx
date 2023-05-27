@@ -16,10 +16,10 @@ const Footer = ({ menu }: FooterProps) => {
     <footer className="w-full bg-gray-900 text-white py-16">
       <PageWidth className={`grid grid-cols-3`}>
         {menu.map(({ title, items }) => (
-          <ul className="flex flex-col gap-2">
+          <ul key={title} className="flex flex-col gap-2">
             <h2 className="font-semibold text-lg mb-6">{title}</h2>
             {items.map(({ label, href }) => (
-              <li className="opacity-70 hover:opacity-100">
+              <li key={label} className="opacity-70 hover:opacity-100">
                 <Link href={href}>{label}</Link>
               </li>
             ))}

@@ -18,7 +18,7 @@ const AboutSection = ({ heading, subHeading, members }: AboutProps) => {
         <h4 className='text-gray-400 lg:max-w-2xl'>{subHeading}</h4>
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {members.map(({ name, role, imgUrl }) => (
-            <li className="flex flex-col gap-4 items-center justify-center border-b border-b-gray-200 pb-4">
+            <li key={name + role} className="flex flex-col gap-4 items-center justify-center border-b border-b-gray-200 pb-4">
               <div>
                 <img src={imgUrl} alt={name} />
               </div>
