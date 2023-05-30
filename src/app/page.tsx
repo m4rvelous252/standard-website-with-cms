@@ -24,7 +24,7 @@ const fetchHomePageData = async () => {
     aboutSectionProps?.slice_type !== 'about_section'
   ) return { HeroSectionProps: undefined, ClientHighlightProps: undefined }
 
-  console.log('heroSectionData.primary.s', heroSectionData.primary.title)
+  console.log('heroSectionData.primary', heroSectionData.primary.title)
 
   return {
     HeroSectionProps: {
